@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="eventsApp">
+<head>
+    <meta charset="UTF-8">
+        <title>Event Registration</title>
+        <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="/css/app.css"/>
+        
+</head>
+<body>
+    <div class="container">
+        <div class="navbar">
+            <div class="navbar-inner">
+                <ul class="nav">
+                    <li><a href="/NewEvent.html">Create Event</a></li>
+                </ul>
+            </div>
+        </div>
+        <div ng-controller="EventController" style="padding-left:20px; padding-right:20px">
+            <img ng-src="{{event.imageUrl}}" alt="{{event.imageUrl}}" >
+            <div class="row">
+                <div class="span11">
+                    <h2>{{event.name | uppercase}}</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="span3">
+                    <div><strong>Date:</strong>{{event.date | date:medium}}</div>
+                    <div><strong>Time:</strong>{{event.time}}</div>
+                    <div><strong>Price:</strong>{{event.price | currency:$}}</div>
+                </div>
+                <div class="span4">
+                    <address>
+                        <strong>Address:</strong><br>
+                        {{event.location.companyname}}<br>
+                        {{event.location.city}},{{event.location.course}}
+
+                    </address>
+                </div>
+            </div>
+            <div>{{3.133232 | number:2}}</div>
+            <hr/>
+            <h3>Sessions</h3>
+            Order By:
+            <select ng-model="sortorder" class="input-small">
+                <option selected value="name">Name</option>
+                <option value="-upVoteCount">Votes</option>
+            </select>
+            Show:
+            <select ng-model="query.level" class="input-medium">
+                <option selected value="">All</option>
+                <option selected value="introductory">introductory</option>
+                <option selected value="intermediate">intermediate</option>
+                <option selected value="advanced">Advanced</option>
+                
+            </select>
+            <ul class="thumbnails">
+                <li ng-repeat="session in event.sessions | orderBy:sortorder | limitTo:3 | filter:query">
+                   
+                    <div class="row session">
+                            <div class="span0 well votingNidget">
+                                    <div class="votingButton" ng-click="upVoteSession(session)">
+                                        <i class="icon-chevron-up icon-white"></i>
+                                    </div>
+                                    <div class="badge badge-inverse">
+                                        <div>{{session.upVoteCount}}</div>
+                                    </div>
+                                    <div class="votingButton" ng-click="downVoteSession(session)">
+                                        <i class="icon-chevron-down"></i>
+                                    </div>
+                                </div>
+                        <div class="well span9">
+                            <h4 class="well-title">{{session.name}}</h4>
+                            <h6 style="margin-top:10px">{{session.creatorname}}</h6>
+                            <span>Duration:{{session.duration}}</span><br>
+                            <span>Level:{{session.level}}</span>
+                            <p>{{session.abstract}}</p>
+                        </div>
+                    </div>
+                    
+                </li>
+            </ul>
+        </div>
+
+    </div>
+    <!-- <script src="jquery-3.3.1.min.js"></script>   -->
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+      <script src="/js/app.js"></script>
+      <script src="/js/controllers/EventControler.js"></script>
+</body>
+</html>
